@@ -1,39 +1,32 @@
 package com.example.miguelmendez.lab_2_3_moviles;
 
 public class SedesTEC {
-    private String Nombre;
-    private double latitud;
-    private double longitud;
-    private String descripcion;
-
-    public SedesTEC(String name, double lt, double longi, String desc){
-        this.Nombre = name;
-        this.latitud = lt;
-        this.longitud = longi;
-        this.descripcion = desc;
-    }
+    public String nombre;
+    public String latitud;
+    public String longitud;
+    public String descripcion;
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
     }
 
-    public double getLatitud() {
+    public String getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(double latitud) {
+    public void setLatitud(String latitud) {
         this.latitud = latitud;
     }
 
-    public double getLongitud() {
+    public String getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(double longitud) {
+    public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
 
@@ -45,6 +38,11 @@ public class SedesTEC {
         this.descripcion = descripcion;
     }
 
-
+    public SedesTEC(String name, String lt, String longi, String desc){
+        this.nombre = name;
+        this.latitud = lt;
+        this.longitud = longi;
+        this.descripcion = desc;
+    }
 
 }
