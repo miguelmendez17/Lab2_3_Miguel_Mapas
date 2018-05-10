@@ -2,6 +2,7 @@ package com.example.miguelmendez.lab_2_3_moviles;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,7 +31,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private static final int LOCATION_REQUEST_CODE = 101;
     private GoogleMap mMap;
@@ -94,19 +95,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-
-        if (marker.equals(markerPais)) {
-            Intent intent = new Intent(this, MarkerDetailActivity.class);
-            intent.putExtra(EXTRA_LATITUD, marker.getPosition().latitude);
-            intent.putExtra(EXTRA_LONGITUD, marker.getPosition().longitude);
-
-            startActivity(intent);
-        }
-
-        return false;
-    }
 
     protected void requestPermission(String permissionType,
                                      int requestCode) {
@@ -137,10 +125,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Posicion Costa Rica
        LatLng costarica = new LatLng(9.6,-83.9660188);
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(costarica,7));
-        // Eventos
-        googleMap.setOnMarkerClickListener(this);
-        //evento para agregar los markers de las sedes
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(costarica,7));
+        mMap.setOnInfoWindowClickListener(this);
     }
 
     public void agregarMarkers(GoogleMap googleMap){
@@ -151,9 +137,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public void clickInfo(Marker marker){
-        ArrayList<SedesTEC> arraySedes = MyBd.listaSedes();
-        DialogCustom.newInstance(marker.getTitle(),marker.getSnippet());
+    public AlertDialog createDialog(SedesTEC sede){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(sede.getNombre());
+        builder.setMessage("Descripción: "+sede.getDescripcion()+"\n\n"+
+                            "Latitud: "+sede.getLatitud()+"\n"+
+                            "Longitud: "+sede.getLongitud());
+        return builder.create();
     }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        ArrayList<SedesTEC> arrayList = MyBd.listaSedes();
+        for (SedesTEC sede: arrayList ) {
+            if (sede.getNombre().equals(marker.getTitle())){
+                AlertDialog dialog = createDialog(sede);
+                dialog.show();
+            }
+        }
+    }
+
 
 }

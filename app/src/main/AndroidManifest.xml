@@ -30,7 +30,7 @@ package="com.example.miguelmendez.lab_2_3_moviles">
         android:value="@string/google_maps_key" />
 
     <activity
-        android:name=".MapsActivity"
+        android:name="com.example.miguelmendez.lab_2_3_moviles.MapsActivity"
         android:label="@string/title_activity_maps">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,6 @@ package="com.example.miguelmendez.lab_2_3_moviles">
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-    <activity android:name=".MarkerDetailActivity"></activity>
 </application>
 
 </manifest>
